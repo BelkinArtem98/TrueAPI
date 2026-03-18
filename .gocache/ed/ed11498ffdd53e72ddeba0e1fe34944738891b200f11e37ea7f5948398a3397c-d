@@ -1,0 +1,8 @@
+=== RUN   TestCreateUserAssignsID
+--- PASS: TestCreateUserAssignsID (0.00s)
+=== RUN   TestCreateUserRejectsInvalidInput
+--- PASS: TestCreateUserRejectsInvalidInput (0.00s)
+=== RUN   TestUpdateAndDeleteUser
+--- PASS: TestUpdateAndDeleteUser (0.00s)
+PASS
+ok  	trueAPI/internal/services	2.388s

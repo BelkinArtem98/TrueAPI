@@ -11,6 +11,8 @@ type UserService interface {
 	CreateUser(user models.User) (models.User, error)
 	GetAllUsers() []models.User
 	GetUserByID(id int) (models.User, error)
+	UpdateUser(id int, user models.User) (models.User, error)
+	DeleteUser(id int) error
 }
 
 type userService struct {
@@ -46,4 +48,28 @@ func (s *userService) GetUserByID(id int) (models.User, error) {
 	}
 
 	return user, nil
+}
+
+func (s *userService) UpdateUser(id int, user models.User) (models.User, error) {
+	if strings.TrimSpace(user.Username) == "" {
+		return models.User{}, errors.New("username cannot be empty")
+	}
+	if user.Age <= 0 {
+		return models.User{}, errors.New("age must be a positive integer")
+	}
+
+	updatedUser, found := s.repo.UpdateUser(id, user.Username, user.Age)
+	if !found {
+		return models.User{}, errors.New("user not found")
+	}
+
+	return updatedUser, nil
+}
+
+func (s *userService) DeleteUser(id int) error {
+	if deleted := s.repo.DeleteUser(id); !deleted {
+		return errors.New("user not found")
+	}
+
+	return nil
 }
