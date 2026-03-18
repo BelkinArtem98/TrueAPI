@@ -15,6 +15,12 @@ type UserRepositoryInterface interface {
 	GetAllUsers() []models.User
 }
 
+func (r *UserRepository) GetAllUsers() []models.User {
+	users := make([]models.User, len(r.users))
+	copy(users, r.users)
+	return users
+}
+
 func NewUserRepository() *UserRepository {
 	return &UserRepository{
 		users:  []models.User{},
@@ -65,8 +71,3 @@ func (r *UserRepository) DeleteUser(id int) bool {
 	}
 	return false
 }
-
-func (r *UserRepository) GetAllUsers() []models.User {
-	return r.users
-}
-
